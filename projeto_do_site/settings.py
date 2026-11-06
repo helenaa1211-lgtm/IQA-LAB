@@ -18,9 +18,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-p@8q@4-n3=(9xibbknm*qbo*$#+e7bc8@(ximr&nm3wma_yhs1')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Procura a variável no Render. Se não achar (no seu PC), roda como True.
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True' or os.getenv('DEBUG_LOCAL', 'True') == 'True'
 
-ALLOWED_HOSTS = ['repayment-maimed-unstylish.ngrok-free.dev', '127.0.0.1', 'localhost']
+# Adicione o '*' para o Django aceitar o link que o Render vai gerar para você
+ALLOWED_HOSTS = ['*']
 
 # Necessário para evitar erros de CSRF quando acessado via Ngrok
 CSRF_TRUSTED_ORIGINS = ['https://repayment-maimed-unstylish.ngrok-free.dev']
@@ -128,6 +130,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# A LINHA QUE VOCÊ DEVE ADICIONAR AQUI:
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 CORS_ALLOW_ALL_ORIGINS = True
 
