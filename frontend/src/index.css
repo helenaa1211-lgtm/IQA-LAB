@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-teal-brand: #0d9488;
+  --color-bg-dark: #F4F6F9;
+  --color-surface: #FFFFFF;
+  --color-surface2: #E2E8F0;
+}
+
+html, body, #root {
+  height: 100%;
+  background: #E2E8F0;
+  font-family: 'Inter', sans-serif;
+  color: #0F172A;
+}
+
+::-webkit-scrollbar { 
+  width: 4px; 
+}
+
+::-webkit-scrollbar-thumb { 
+  background: #cbd5e1; 
+  border-radius: 2px; 
+}
+
+/* ==========================================================================
+   Personalização dos Popups do Leaflet
+   ========================================================================== */
+
+.leaflet-popup {
+  position: absolute;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: inherit !important;
+  width: max-content !important;
+  max-width: 400px !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+  color: #64748b !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  z-index: 20 !important;
+  transition: color 0.15s ease-in-out;
+}
+
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: #0f172a !important;
+}
+
+.leaflet-popup-tip {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: none !important;
+}
