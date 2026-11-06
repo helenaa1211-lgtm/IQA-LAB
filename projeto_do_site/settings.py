@@ -135,6 +135,9 @@ STATICFILES_DIRS = [
 # A LINHA QUE VOCÊ DEVE ADICIONAR AQUI:
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Garante que o WhiteNoise comprima os arquivos para carregar mais rápido
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 
