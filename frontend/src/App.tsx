@@ -1551,7 +1551,7 @@ export default function App() {
     setCarregando(true);
     try {
       const resposta = await axios.get<RespostaApiDjango>(
-        "http://127.0.0.1:8000/api/painel/"
+        "https://iqa-lab.onrender.com/"
       );
       const raw = resposta.data;
 
