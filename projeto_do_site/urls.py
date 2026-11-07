@@ -22,16 +22,11 @@ from sensores.views import (
 )
 
 urlpatterns = [
-    # 1. Rota Principal: Serve o app Flutter Web (index.html da pasta templates/)
-    path('', TemplateView.as_view(template_name='index.html'), name='flutter_app'),
+    # 1. Rota Principal: mostra o JSON do painel (igual a /api/painel/)
+    path('', api_dados_painel, name='inicio'),
 
-    # 2. Painel de Administração do Django
-    path('admin/', admin.site.urls),
-    
-    # 3. Painel HTML antigo com Chart.js (caso queira acessar diretamente)
-    path('painel-antigo/', painel_sensores, name='painel_sensores'),
-    
-    # 4. Endpoints de API REST
-    path('api/dados/', api_receber_dados, name='api_dados'),
-    path('api/painel/', api_dados_painel, name='api_dados_painel'),
-]
+    # 2. App Flutter Web movido para /app/
+    path('app/', TemplateView.as_view(template_name='index.html'), name='flutter_app'),
+
+    # 3. Painel de Administração do Django
+    path('admin/',
