@@ -1655,7 +1655,7 @@ export default function App() {
               </div>
               <div>
                 <h1 className="font-display text-2xl font-extrabold leading-none text-[#1a1a1a] tracking-tight">
-                  IQArLab
+                  IQARio
                 </h1>
                 <p className="inline-block text-[10px] font-mono text-white bg-[#1a1a1a] font-bold uppercase tracking-widest mt-1 px-1.5 py-0.5 rounded">
                   Estação PUC-Rio
