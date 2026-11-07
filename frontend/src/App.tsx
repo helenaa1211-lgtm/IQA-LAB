@@ -243,7 +243,7 @@ function DecoracaoFundo() {
 // Faixa rolante com os dados atuais (estilo "placar ao vivo")
 function FaixaAoVivo({ iqa, timestamp }: { iqa: IQAResumo; timestamp?: string }) {
   const itens = [
-    `IQA: ${formatarNumero(iqa.iqa ?? 0, 0)}`,
+    `IQAr: ${formatarNumero(iqa.iqa ?? 0, 0)}`,
     `QUALIDADE DO AR: ${(iqa.qualidade || "N/A").toUpperCase()}`,
     `POLUENTE DETERMINANTE: ${normalizarPoluente(iqa.poluenteDeterminante || "")}`,
     "ESTAÇÃO PUC-RIO",
@@ -333,7 +333,7 @@ const criarIconeEstacao = (cor?: string) => {
   });
 };
 
-// Medidor semicircular do IQA (0 a 250+)
+// Medidor semicircular do IQAr (0 a 250+)
 const FAIXAS_MEDIDOR = [
   { de: 0, ate: 40, cor: "#00a859" },
   { de: 40, ate: 80, cor: "#d97706" },
@@ -362,7 +362,7 @@ function MedidorIQA({ valor, cor }: { valor: number; cor: string }) {
   const r = 110;
 
   return (
-    <svg viewBox="0 0 300 175" className="w-full max-w-[300px]" role="img" aria-label={`IQA ${formatarNumero(valor, 0)}`}>
+    <svg viewBox="0 0 300 175" className="w-full max-w-[300px]" role="img" aria-label={`IQAr ${formatarNumero(valor, 0)}`}>
       {/* contorno preto */}
       <path d={caminhoArco(cx, cy, r, 0, 180)} stroke="#1a1a1a" strokeWidth={34} fill="none" strokeLinecap="round" />
       {FAIXAS_MEDIDOR.map((f, i) => (
@@ -446,7 +446,7 @@ export function DashboardTab({ iqa, m }: { iqa?: IQAResumo | null; m?: Medicao |
       <div className="w-full font-mono">
         <div className="flex items-center gap-3 mb-4 px-1">
           <span className="text-xs text-[#1a1a1a] font-bold tracking-wider uppercase bg-[#33CCFF] border-[2.5px] border-[#1a1a1a] rounded-full px-3 py-1 shadow-[3px_3px_0_#1a1a1a]">
-            ÍNDICE DE QUALIDADE DO AR (IQA) &mdash; RESOLUÇÃO CONAMA Nº 506/2024
+            ÍNDICE DE QUALIDADE DO AR (IQAr) &mdash; RESOLUÇÃO CONAMA Nº 506/2024
           </span>
           <div className="flex-1 border-t-[3px] border-dashed border-[#1a1a1a]/40" />
         </div>
@@ -547,7 +547,7 @@ export function DashboardTab({ iqa, m }: { iqa?: IQAResumo | null; m?: Medicao |
                     className="px-2.5 py-1 rounded-xl text-xs font-bold font-mono tracking-wide shrink-0 text-white border-2 border-[#1a1a1a] shadow-[2px_2px_0_#1a1a1a]"
                     style={{ backgroundColor: corIqa }}
                   >
-                    IQA: {valorIqaFormatado}
+                    IQAr: {valorIqaFormatado}
                   </span>
                 </div>
 
@@ -631,9 +631,9 @@ const METRICA_CONFIG: Record<
   }
 > = {
   IQA: {
-    label: "IQA",
-    rawLabel: "IQA",
-    cardLabel: "IQA",
+    label: "IQAr",
+    rawLabel: "IQAr",
+    cardLabel: "IQAr",
     unit: "",
     color: "#E6007E",
     decimals: 0,
@@ -1655,7 +1655,7 @@ export default function App() {
               </div>
               <div>
                 <h1 className="font-display text-2xl font-extrabold leading-none text-[#1a1a1a] tracking-tight">
-                  IQALab
+                  IQArLab
                 </h1>
                 <p className="inline-block text-[10px] font-mono text-white bg-[#1a1a1a] font-bold uppercase tracking-widest mt-1 px-1.5 py-0.5 rounded">
                   Estação PUC-Rio
