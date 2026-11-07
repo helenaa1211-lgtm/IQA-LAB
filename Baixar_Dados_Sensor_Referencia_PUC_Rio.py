@@ -1047,47 +1047,43 @@ def processar_e_salvar_drive():
     df_horario_api = df_horario.rename(columns={col_tempo: 'timestamp'})
     df_diario_api = df_diario.rename(columns={col_tempo: 'timestamp'})
 
-    DJANGO_API_URL = "http://127.0.0.1:8000/api/painel/"
+    # Endereço do site no Render. Para testar no Django local, defina antes no terminal:
+    #   $env:DJANGO_API_URL = "http://127.0.0.1:8000/api/painel/"
+    DJANGO_API_URL = os.getenv("DJANGO_API_URL") or "https://iqa-lab.onrender.com/api/painel/"
 
     # Envia os 3 pacotes de dados
     for tipo, dataframe in [('bruto', df_bruto_api), ('horario', df_horario_api), ('diario', df_diario_api)]:
-        
+
         df_temp = dataframe.copy()
-        
+
         # Converte para datetime e formata em string ISO
         df_temp['timestamp'] = pd.to_datetime(df_temp['timestamp'])
         df_temp['timestamp'] = df_temp['timestamp'].dt.strftime('%Y-%m-%dT%H:%M:%S')
-        
-        # -------------------------------------------------------------
-        # SANITIZAÇÃO RIGOROSA DE NaN E INF PARA O JSON DO DJANGO
-        # -------------------------------------------------------------
-        # 1. Substitui Infinito por NaN
+
+        # Sanitização de NaN e Inf para o JSON do Django
         df_temp = df_temp.replace([np.inf, -np.inf], np.nan)
-        
-        # 2. Converte para dict transformando NaNs nativos do Pandas em None do Python
         dados_dict = df_temp.astype(object).where(pd.notnull(df_temp), None).to_dict(orient="records")
 
-        payload = {
-            "tipo": tipo,
-            "dados": dados_dict
-        }
-        
-        try:
-            # Serializa usando json.dumps explicitamente para evitar exceções de float fora de escala
-            payload_json = json.dumps(payload)
-            resposta = requests.post(
-                DJANGO_API_URL, 
-                data=payload_json, 
-                headers={'Content-Type': 'application/json'}, 
-                timeout=30
-            )
-            
-            if resposta.status_code == 200:
-                print(f"✅ Dados do tipo '{tipo}' enviados ao Django com sucesso!")
-            else:
-                print(f"❌ Erro ao enviar '{tipo}': {resposta.text}")
-        except Exception as e:
-            print(f"❌ Não foi possível conectar ao Django para o tipo '{tipo}': {e}")
+        payload_json = json.dumps({"tipo": tipo, "dados": dados_dict})
+
+        # O Render gratuito pode estar "dormindo" (até ~1 min para acordar):
+        # timeout longo e até 3 tentativas
+        for tentativa in range(1, 4):
+            try:
+                resposta = requests.post(
+                    DJANGO_API_URL,
+                    data=payload_json,
+                    headers={'Content-Type': 'application/json'},
+                    timeout=120
+                )
+                if resposta.status_code == 200:
+                    print(f"✅ '{tipo}' enviado para {DJANGO_API_URL}: {resposta.json().get('mensagem')}")
+                    break
+                print(f"❌ Erro ao enviar '{tipo}' (tentativa {tentativa}/3): {resposta.status_code} {resposta.text[:300]}")
+            except Exception as e:
+                print(f"❌ Falha de conexão ao enviar '{tipo}' (tentativa {tentativa}/3): {e}")
+            if tentativa < 3:
+                time.sleep(20)
 
     # 6. Salva os arquivos locais temporários
     caminhos_locais = {
