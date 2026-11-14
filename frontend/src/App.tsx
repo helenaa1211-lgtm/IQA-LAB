@@ -336,7 +336,7 @@ const criarIconeEstacao = (cor?: string) => {
 // Medidor semicircular do IQAr (0 a 250+)
 const FAIXAS_MEDIDOR = [
   { de: 0, ate: 40, cor: "#00a859" },
-  { de: 40, ate: 80, cor: "#d97706" },
+  { de: 40, ate: 80, cor: "#FACC15" },
   { de: 80, ate: 120, cor: "#ea580c" },
   { de: 120, ate: 200, cor: "#dc2626" },
   { de: 200, ate: 250, cor: "#7c3aed" },
@@ -433,7 +433,7 @@ export function DashboardTab({ iqa, m }: { iqa?: IQAResumo | null; m?: Medicao |
 
   const faixasIqa = [
     { faixa: "0 – 40", rotulo: "Boa", cor: "#00a859", bgCor: "#D8F8E6", emoji: "😄" },
-    { faixa: "41 – 80", rotulo: "Moderada", cor: "#b45309", bgCor: "#FFF0C2", emoji: "🙂" },
+    { faixa: "41 – 80", rotulo: "Moderada", cor: "#A16207", bgCor: "#FFF0C2", emoji: "🙂" },
     { faixa: "81 – 120", rotulo: "Ruim", cor: "#ea580c", bgCor: "#FFE1CC", emoji: "😷" },
     { faixa: "121 – 200", rotulo: "Muito Ruim", cor: "#dc2626", bgCor: "#FFD6D6", emoji: "🤢" },
     { faixa: "> 200", rotulo: "Péssima", cor: "#7c3aed", bgCor: "#EADCFF", emoji: "☠️" },
